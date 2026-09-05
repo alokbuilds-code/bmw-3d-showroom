@@ -1,0 +1,165 @@
+
+@keyframes enginePulse {
+  0% {
+    box-shadow: 0 0 5px var(--bmw-red);
+    opacity: 0.8;
+  }
+  50% {
+    box-shadow: 0 0 16px var(--bmw-red), 0 0 25px rgba(226, 26, 26, 0.6);
+    opacity: 1;
+  }
+  100% {
+    box-shadow: 0 0 5px var(--bmw-red);
+    opacity: 0.8;
+  }
+}
+
+.engine-start-btn:not(.running) .engine-led {
+  animation: enginePulse 1.8s infinite ease-in-out;
+}
+
+/* Mouse Wheel Scroll Prompt Sweep */
+@keyframes mouseWheelSweep {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  70% {
+    opacity: 0.2;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+/* Glow Border Shimmer */
+@keyframes borderShimmer {
+  0% {
+    border-color: rgba(0, 102, 177, 0.3);
+  }
+  50% {
+    border-color: rgba(0, 229, 255, 0.7);
+  }
+  100% {
+    border-color: rgba(0, 102, 177, 0.3);
+  }
+}
+
+.telemetry-hud-overlay {
+  animation: borderShimmer 6s infinite ease-in-out;
+}
+
+/* Dynamic Redline Alert Pulse */
+@keyframes redlineAlert {
+  0% {
+    background-color: var(--bmw-red);
+    box-shadow: 0 0 10px var(--bmw-red);
+  }
+  50% {
+    background-color: #ff5555;
+    box-shadow: 0 0 25px #ff5555;
+  }
+  100% {
+    background-color: var(--bmw-red);
+    box-shadow: 0 0 10px var(--bmw-red);
+  }
+}
+
+.rpm-bar-fill.redline {
+  animation: redlineAlert 0.25s infinite alternate;
+}
+
+/* Launch Control Button Pulse */
+@keyframes launchGlowPulse {
+  0% {
+    box-shadow: 0 0 10px rgba(226, 26, 26, 0.4), inset 0 0 10px rgba(226, 26, 26, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 24px rgba(226, 26, 26, 0.8), inset 0 0 18px rgba(226, 26, 26, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(226, 26, 26, 0.4), inset 0 0 10px rgba(226, 26, 26, 0.2);
+  }
+}
+
+.btn-launch-control {
+  animation: launchGlowPulse 2s infinite ease-in-out;
+}
+
+/* Launch Screen Shake */
+@keyframes screenWarpShake {
+  0% { transform: translate(0, 0) scale(1); }
+  20% { transform: translate(-3px, 3px) scale(1.01); }
+  40% { transform: translate(3px, -2px) scale(1.015); }
+  60% { transform: translate(-4px, -1px) scale(1.02); }
+  80% { transform: translate(2px, 3px) scale(1.01); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+.screen-shake {
+  animation: screenWarpShake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
+}
+
+/* Speed Warp Lines Sweep */
+@keyframes warpStreak {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(-20px);
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.3) translateY(40px);
+  }
+}
+
+/* Fade In Up Reveal */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Subtle Floating Stance */
+@keyframes idleFloat {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.floating-element {
+  animation: idleFloat 4s ease-in-out infinite;
+}
+
+/* Turntable Icon Spin Hint */
+@keyframes rotate360 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.icon-spin-slow {
+  animation: rotate360 12s linear infinite;
+}

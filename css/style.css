@@ -1,0 +1,1656 @@
+/* ==========================================================================
+   BMW M-PERFORMANCE & i-SERIES LUXURY AUTOMOTIVE STYLESHEET 2.0
+   Precision German Engineering & Modern Digital Luxury Design
+   ========================================================================== */
+
+:root {
+  --bmw-bg-dark: #07070a;
+  --bmw-bg-card: rgba(16, 18, 24, 0.78);
+  --bmw-bg-card-hover: rgba(22, 26, 36, 0.92);
+  --bmw-border: rgba(255, 255, 255, 0.12);
+  --bmw-border-glow: rgba(0, 102, 177, 0.35);
+
+  /* BMW M Tricolor & Accents */
+  --bmw-light-blue: #0066b1;
+  --bmw-dark-blue: #002d62;
+  --bmw-red: #e21a1a;
+  --bmw-electric-cyan: #00e5ff;
+  --bmw-gold: #cba135;
+
+  /* Typography Colors */
+  --text-white: #ffffff;
+  --text-silver: #d1d5db;
+  --text-dim: #9ca3af;
+  --text-muted: #6b7280;
+
+  /* Fonts */
+  --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Glassmorphism */
+  --glass-blur: blur(20px);
+  --transition-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bmw-bg-dark);
+  color: var(--text-white);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+body {
+  line-height: 1.6;
+  background: radial-gradient(circle at 50% 0%, #111522 0%, var(--bmw-bg-dark) 55%);
+  min-height: 100vh;
+  position: relative;
+  cursor: default;
+}
+
+/* Ambient Cursor Glow */
+.cursor-glow {
+  position: fixed;
+  width: 450px;
+  height: 450px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 102, 177, 0.14) 0%, rgba(0, 229, 255, 0.04) 40%, transparent 70%);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  transition: transform 0.15s ease-out;
+}
+
+/* Launch Warp Overlay */
+.launch-warp-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1500;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  background: radial-gradient(circle, transparent 40%, rgba(0, 229, 255, 0.12) 80%, rgba(226, 26, 26, 0.2) 100%);
+}
+
+.launch-warp-overlay.active {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   HEADER & NAVIGATION BAR
+   ========================================================================== */
+
+.bmw-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 48px;
+  background: rgba(7, 7, 10, 0.75);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid var(--bmw-border);
+  transition: all 0.35s var(--transition-smooth);
+}
+
+.bmw-header.scrolled {
+  padding: 12px 48px;
+  background: rgba(7, 7, 10, 0.92);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.brand-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-decoration: none;
+}
+
+.bmw-roundel {
+  width: 44px;
+  height: 44px;
+  filter: drop-shadow(0 0 12px rgba(0, 102, 177, 0.45));
+  transition: transform 0.4s var(--transition-smooth);
+}
+
+.bmw-roundel:hover {
+  transform: rotate(30deg) scale(1.05);
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: 2px;
+  color: var(--text-white);
+  line-height: 1.1;
+}
+
+.m-stripe {
+  display: flex;
+  height: 3px;
+  width: 100%;
+  margin-top: 4px;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.m-stripe .blue { background-color: var(--bmw-light-blue); width: 34%; }
+.m-stripe .darkblue { background-color: var(--bmw-dark-blue); width: 33%; }
+.m-stripe .red { background-color: var(--bmw-red); width: 33%; }
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+
+.nav-link {
+  color: var(--text-silver);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: color 0.25s ease, text-shadow 0.25s ease;
+  position: relative;
+  padding: 6px 0;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--bmw-light-blue), var(--bmw-electric-cyan));
+  transition: width 0.3s var(--transition-smooth);
+}
+
+.nav-link:hover, .nav-link.active {
+  color: #fff;
+  text-shadow: 0 0 12px rgba(0, 229, 255, 0.4);
+}
+
+.nav-link:hover::after, .nav-link.active::after {
+  width: 100%;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* ENGINE START / STOP BUTTON IN HEADER */
+.engine-start-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(226, 26, 26, 0.15);
+  border: 1px solid rgba(226, 26, 26, 0.4);
+  color: #fff;
+  padding: 8px 18px;
+  border-radius: 40px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  transition: all 0.3s var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+.engine-start-btn:hover {
+  background: rgba(226, 26, 26, 0.3);
+  box-shadow: 0 0 20px rgba(226, 26, 26, 0.5);
+  transform: translateY(-1px);
+}
+
+.engine-start-btn.running {
+  background: rgba(0, 229, 255, 0.15);
+  border-color: rgba(0, 229, 255, 0.5);
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
+}
+
+.engine-led {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--bmw-red);
+  box-shadow: 0 0 8px var(--bmw-red);
+}
+
+.engine-start-btn.running .engine-led {
+  background: var(--bmw-electric-cyan);
+  box-shadow: 0 0 8px var(--bmw-electric-cyan);
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, var(--bmw-light-blue) 0%, var(--bmw-dark-blue) 100%);
+  color: #fff;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0, 102, 177, 0.35);
+  transition: all 0.3s var(--transition-smooth);
+  text-decoration: none;
+}
+
+.btn-primary:hover {
+  box-shadow: 0 6px 28px rgba(0, 102, 177, 0.6);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 10px 24px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s var(--transition-smooth);
+  text-decoration: none;
+}
+
+.btn-outline:hover {
+  border-color: var(--bmw-electric-cyan);
+  background: rgba(0, 229, 255, 0.08);
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.25);
+}
+
+/* ==========================================================================
+   3D SHOWROOM CANVAS & BACKGROUND STAGE
+   ========================================================================== */
+
+.three-canvas-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.three-canvas-container.interactive {
+  pointer-events: auto;
+  cursor: grab;
+}
+
+.three-canvas-container.interactive:active {
+  cursor: grabbing;
+}
+
+#bmw-webgl-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ==========================================================================
+   FLOATING CAMERA DIRECTOR TOOLBAR
+   ========================================================================== */
+
+.camera-director-bar {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(10, 12, 18, 0.82);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--bmw-border);
+  padding: 6px 14px;
+  border-radius: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+.director-label {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: var(--bmw-electric-cyan);
+  margin-right: 4px;
+}
+
+.cam-preset-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-dim);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.cam-preset-btn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.cam-preset-btn.active {
+  color: #fff;
+  background: rgba(0, 102, 177, 0.35);
+  border-color: var(--bmw-light-blue);
+  box-shadow: 0 0 14px rgba(0, 102, 177, 0.5);
+}
+
+/* ==========================================================================
+   HERO SECTION & TELEMETRY HUD
+   ========================================================================== */
+
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 120px 48px 48px 48px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.hero-section > * {
+  pointer-events: auto;
+}
+
+.hero-content {
+  max-width: 650px;
+  margin-top: 40px;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(0, 102, 177, 0.15);
+  border: 1px solid rgba(0, 102, 177, 0.4);
+  border-radius: 20px;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  font-weight: 700;
+  color: var(--bmw-electric-cyan);
+  margin-bottom: 20px;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: 4rem;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -1px;
+  margin-bottom: 18px;
+  background: linear-gradient(180deg, #ffffff 40%, rgba(255, 255, 255, 0.6) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  color: var(--text-silver);
+  font-weight: 400;
+  margin-bottom: 32px;
+  max-width: 540px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Launch Control Trigger Button */
+.btn-launch-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, rgba(226, 26, 26, 0.25) 0%, rgba(139, 14, 20, 0.4) 100%);
+  border: 1px solid var(--bmw-red);
+  color: #fff;
+  padding: 11px 22px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-launch-control:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 25px rgba(226, 26, 26, 0.7);
+}
+
+.launch-pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--bmw-red);
+  box-shadow: 0 0 8px var(--bmw-red);
+}
+
+/* Interactive Sound Rev Button */
+.rev-pedal-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 11px 20px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease;
+}
+
+.rev-pedal-btn:active {
+  background: rgba(226, 26, 26, 0.4);
+  border-color: var(--bmw-red);
+  box-shadow: 0 0 25px rgba(226, 26, 26, 0.7);
+  transform: scale(0.96);
+}
+
+/* FLOATING COCKPIT TELEMETRY HUD */
+.telemetry-hud-overlay {
+  position: absolute;
+  right: 48px;
+  top: 120px;
+  width: 350px;
+  background: var(--bmw-bg-card);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--bmw-border);
+  border-radius: 14px;
+  padding: 22px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.65);
+  pointer-events: auto;
+}
+
+.hud-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--bmw-border);
+  padding-bottom: 10px;
+  margin-bottom: 14px;
+}
+
+.hud-title {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  color: var(--text-silver);
+}
+
+.hud-icon-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--bmw-border);
+  color: var(--text-silver);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.hud-icon-btn:hover {
+  background: rgba(0, 229, 255, 0.2);
+  border-color: var(--bmw-electric-cyan);
+  color: #fff;
+}
+
+.drive-mode-pill {
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  background: rgba(226, 26, 26, 0.2);
+  border: 1px solid var(--bmw-red);
+  color: var(--bmw-red);
+  border-radius: 4px;
+}
+
+/* Real-Time Audio Frequency Spectrum */
+.hud-spectrum-container {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 6px;
+  padding: 8px 10px;
+  margin-bottom: 16px;
+}
+
+.spectrum-label {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+#hud-audio-spectrum {
+  width: 100%;
+  height: 36px;
+  display: block;
+}
+
+.hud-gauges-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.gauge-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.gauge-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.gauge-value-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.gauge-number {
+  font-family: var(--font-mono);
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+}
+
+.gauge-unit {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  font-weight: 500;
+}
+
+.rpm-bar-container {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 6px;
+  margin-bottom: 12px;
+  position: relative;
+}
+
+.rpm-bar-fill {
+  height: 100%;
+  width: 12%;
+  background: linear-gradient(90deg, var(--bmw-light-blue), var(--bmw-electric-cyan) 80%, var(--bmw-red) 100%);
+  transition: width 0.08s linear;
+}
+
+/* Turbo Boost Gauge */
+.boost-gauge-wrap {
+  margin-bottom: 14px;
+}
+
+.boost-bar-bg {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.boost-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--bmw-light-blue), var(--bmw-electric-cyan));
+  transition: width 0.06s linear;
+}
+
+.hud-metrics-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1px solid var(--bmw-border);
+  padding-top: 14px;
+}
+
+.hud-metric-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+}
+
+.hud-metric-item .name {
+  color: var(--text-dim);
+}
+
+.hud-metric-item .val {
+  color: #fff;
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
+/* HERO FOOTER SPECS BAR */
+.hero-specs-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  background: rgba(12, 14, 20, 0.65);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--bmw-border);
+  border-radius: 12px;
+  padding: 18px 32px;
+  margin-top: 36px;
+  max-width: 900px;
+}
+
+.spec-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.spec-label {
+  font-size: 0.72rem;
+  letter-spacing: 1.5px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.spec-val {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.spec-desc {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Scroll indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 24px;
+  right: 48px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.mouse-scroll-icon {
+  width: 20px;
+  height: 32px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  padding-top: 4px;
+}
+
+.mouse-wheel {
+  width: 3px;
+  height: 7px;
+  background: var(--bmw-electric-cyan);
+  border-radius: 2px;
+  animation: mouseWheelSweep 1.8s infinite;
+}
+
+/* ==========================================================================
+   LAUNCH CONTROL MODAL & SIMULATOR
+   ========================================================================== */
+
+.launch-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.88);
+  backdrop-filter: blur(14px);
+  z-index: 2500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.launch-modal-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.launch-modal-box {
+  background: #0d1017;
+  border: 1px solid var(--bmw-red);
+  box-shadow: 0 0 50px rgba(226, 26, 26, 0.4);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 580px;
+  padding: 36px;
+  text-align: center;
+  position: relative;
+}
+
+.launch-m-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--bmw-red);
+  margin-bottom: 8px;
+}
+
+.launch-title {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+.launch-status {
+  font-size: 0.95rem;
+  color: var(--text-silver);
+  margin-bottom: 24px;
+}
+
+.launch-timer-circle {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 3px solid var(--bmw-electric-cyan);
+  box-shadow: 0 0 25px rgba(0, 229, 255, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 28px auto;
+}
+
+.launch-big-number {
+  font-family: var(--font-mono);
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+}
+
+.launch-timer-lbl {
+  font-size: 0.65rem;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.launch-pedals-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.pedal-btn {
+  padding: 16px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.15s ease;
+  border: 2px solid transparent;
+}
+
+.brake-pedal {
+  background: rgba(226, 26, 26, 0.15);
+  border-color: rgba(226, 26, 26, 0.4);
+  color: #fff;
+}
+
+.brake-pedal:active, .brake-pedal.active {
+  background: rgba(226, 26, 26, 0.6);
+  border-color: var(--bmw-red);
+  box-shadow: 0 0 25px rgba(226, 26, 26, 0.8);
+  transform: scale(0.96);
+}
+
+.throttle-pedal {
+  background: rgba(0, 229, 255, 0.15);
+  border-color: rgba(0, 229, 255, 0.4);
+  color: #fff;
+}
+
+.throttle-pedal:active, .throttle-pedal.active {
+  background: rgba(0, 229, 255, 0.6);
+  border-color: var(--bmw-electric-cyan);
+  box-shadow: 0 0 25px rgba(0, 229, 255, 0.8);
+  transform: scale(0.96);
+}
+
+/* ==========================================================================
+   SCROLLYTELLING TRACK & CHOREOGRAPHY CHAPTERS
+   ========================================================================== */
+
+.scrolly-track-section {
+  position: relative;
+  height: 400vh;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.scrolly-stage-container {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 0 64px;
+  pointer-events: none;
+}
+
+.story-card-wrapper {
+  max-width: 480px;
+  background: var(--bmw-bg-card);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--bmw-border);
+  border-left: 3px solid var(--bmw-light-blue);
+  border-radius: 12px;
+  padding: 32px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
+  pointer-events: auto;
+  transition: all 0.4s var(--transition-smooth);
+}
+
+.story-step-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--bmw-electric-cyan);
+  margin-bottom: 12px;
+}
+
+.story-title {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 14px;
+  color: #fff;
+}
+
+.story-desc {
+  font-size: 0.95rem;
+  color: var(--text-silver);
+  line-height: 1.65;
+  margin-bottom: 24px;
+}
+
+.story-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  padding-top: 18px;
+  border-top: 1px solid var(--bmw-border);
+}
+
+.story-stat-val {
+  font-family: var(--font-mono);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--bmw-electric-cyan);
+}
+
+.story-stat-lbl {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   REAL-WORLD FLEET SHOWCASE & GALLERY
+   ========================================================================== */
+
+.fleet-section {
+  position: relative;
+  z-index: 10;
+  padding: 120px 48px;
+  background: linear-gradient(180deg, transparent 0%, #07070a 15%, #0a0c12 85%, #07070a 100%);
+}
+
+.section-header {
+  text-align: center;
+  max-width: 750px;
+  margin: 0 auto 60px auto;
+}
+
+.section-tag {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--bmw-light-blue);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.section-heading {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  line-height: 1.15;
+  margin-bottom: 18px;
+  color: #fff;
+}
+
+.section-subtext {
+  font-size: 1.1rem;
+  color: var(--text-dim);
+}
+
+/* Fleet Category Filters */
+.fleet-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 48px;
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--bmw-border);
+  color: var(--text-silver);
+  padding: 10px 22px;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.tab-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.tab-btn.active {
+  background: var(--bmw-light-blue);
+  border-color: var(--bmw-light-blue);
+  color: #fff;
+  box-shadow: 0 0 20px rgba(0, 102, 177, 0.5);
+}
+
+/* Fleet Grid Cards */
+.fleet-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 32px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.fleet-card {
+  background: var(--bmw-bg-card);
+  border: 1px solid var(--bmw-border);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: transform 0.4s var(--transition-smooth), border-color 0.4s ease, box-shadow 0.4s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.fleet-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(0, 102, 177, 0.5);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+}
+
+.card-media-wrap {
+  position: relative;
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+  background: #000;
+}
+
+.card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--transition-smooth);
+}
+
+.fleet-card:hover .card-img {
+  transform: scale(1.08);
+}
+
+.card-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: rgba(7, 7, 10, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--bmw-border);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--bmw-electric-cyan);
+}
+
+.card-price {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  background: rgba(7, 7, 10, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--bmw-border);
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.card-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.card-title {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+.card-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  margin-bottom: 20px;
+}
+
+.card-specs-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  border-top: 1px solid var(--bmw-border);
+  border-bottom: 1px solid var(--bmw-border);
+  padding: 14px 0;
+  margin-bottom: 20px;
+}
+
+.mini-spec {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.mini-spec-num {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.mini-spec-label {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.card-footer {
+  display: flex;
+  gap: 12px;
+  margin-top: auto;
+}
+
+.card-footer .btn-primary, .card-footer .btn-outline {
+  flex: 1;
+  justify-content: center;
+  font-size: 0.78rem;
+  padding: 9px 12px;
+}
+
+/* ==========================================================================
+   360° TURNTABLE & CUSTOMIZER STUDIO
+   ========================================================================== */
+
+.customizer-section {
+  position: relative;
+  z-index: 10;
+  padding: 100px 48px;
+  background: #06070a;
+}
+
+.customizer-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 48px;
+  max-width: 1400px;
+  margin: 0 auto;
+  align-items: center;
+}
+
+.turntable-viewport {
+  position: relative;
+  height: 540px;
+  background: radial-gradient(circle at 50% 60%, rgba(0, 102, 177, 0.1) 0%, rgba(7, 7, 10, 0.9) 70%);
+  border: 1px solid var(--bmw-border);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.turntable-instruction {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: rgba(7, 7, 10, 0.75);
+  backdrop-filter: blur(10px);
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--bmw-border);
+  font-size: 0.75rem;
+  color: var(--bmw-electric-cyan);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 5;
+}
+
+.turntable-slider-wrap {
+  position: absolute;
+  bottom: 24px;
+  width: 60%;
+  left: 20%;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.turntable-slider {
+  width: 100%;
+  accent-color: var(--bmw-light-blue);
+  cursor: pointer;
+}
+
+/* Customizer Panel Drawer */
+.customizer-panel {
+  background: var(--bmw-bg-card);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--bmw-border);
+  border-radius: 16px;
+  padding: 32px;
+}
+
+.config-group {
+  margin-bottom: 28px;
+}
+
+.config-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.config-val-name {
+  color: #fff;
+}
+
+.color-swatches-grid {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.color-swatch {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.color-swatch:hover {
+  transform: scale(1.12);
+}
+
+.color-swatch.active {
+  border-color: #fff;
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.4);
+}
+
+/* Wheel Selection List */
+.wheel-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.wheel-opt {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--bmw-border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.wheel-opt:hover, .wheel-opt.active {
+  background: rgba(0, 102, 177, 0.15);
+  border-color: var(--bmw-light-blue);
+}
+
+.wheel-opt-name {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.wheel-opt-price {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--bmw-electric-cyan);
+}
+
+/* Summary Price & Order CTA */
+.config-summary-bar {
+  border-top: 1px solid var(--bmw-border);
+  padding-top: 20px;
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.price-row .label {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+
+.price-row .total-amount {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+/* ==========================================================================
+   ENGINEERING & INNOVATION TIMELINE
+   ========================================================================== */
+
+.heritage-section {
+  position: relative;
+  z-index: 10;
+  padding: 100px 48px;
+  background: radial-gradient(circle at 50% 100%, #101420 0%, #07070a 70%);
+}
+
+.timeline-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.timeline-card {
+  background: var(--bmw-bg-card);
+  border: 1px solid var(--bmw-border);
+  border-radius: 12px;
+  padding: 28px;
+  position: relative;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.timeline-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--bmw-electric-cyan);
+}
+
+.timeline-year {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--bmw-light-blue);
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.timeline-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.timeline-desc {
+  font-size: 0.88rem;
+  color: var(--text-dim);
+  line-height: 1.55;
+}
+
+/* ==========================================================================
+   BUILD & RESERVE MODAL
+   ========================================================================== */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(12px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.build-modal {
+  background: #0d1017;
+  border: 1px solid var(--bmw-border);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 720px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 36px;
+  position: relative;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.modal-close-btn:hover {
+  color: #fff;
+}
+
+.build-summary-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+}
+
+.build-summary-table tr {
+  border-bottom: 1px solid var(--bmw-border);
+}
+
+.build-summary-table td {
+  padding: 12px 0;
+  font-size: 0.9rem;
+}
+
+.build-summary-table td:first-child {
+  color: var(--text-dim);
+}
+
+.build-summary-table td:last-child {
+  text-align: right;
+  font-weight: 600;
+  color: #fff;
+}
+
+.reservation-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.bmw-input {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--bmw-border);
+  border-radius: 6px;
+  padding: 12px 16px;
+  color: #fff;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.25s ease;
+}
+
+.bmw-input:focus {
+  border-color: var(--bmw-light-blue);
+  box-shadow: 0 0 12px rgba(0, 102, 177, 0.3);
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+
+.bmw-footer {
+  position: relative;
+  z-index: 10;
+  background: #040507;
+  border-top: 1px solid var(--bmw-border);
+  padding: 60px 48px 36px 48px;
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: 2fr repeat(3, 1fr);
+  gap: 48px;
+  max-width: 1400px;
+  margin: 0 auto 48px auto;
+}
+
+.footer-brand p {
+  color: var(--text-dim);
+  font-size: 0.88rem;
+  margin-top: 16px;
+  max-width: 320px;
+}
+
+.footer-col h4 {
+  font-size: 0.82rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+.footer-col ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-col a {
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 0.85rem;
+  transition: color 0.2s ease;
+}
+
+.footer-col a:hover {
+  color: var(--bmw-electric-cyan);
+}
+
+.footer-bottom {
+  max-width: 1400px;
+  margin: 0 auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN (Tablets & Mobile Viewports)
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .bmw-header {
+    padding: 14px 24px;
+  }
+  .nav-links {
+    display: none;
+  }
+  .hero-section {
+    padding: 100px 24px 36px 24px;
+  }
+  .hero-title {
+    font-size: 3rem;
+  }
+  .telemetry-hud-overlay {
+    position: static;
+    width: 100%;
+    margin-top: 28px;
+  }
+  .customizer-layout {
+    grid-template-columns: 1fr;
+  }
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+  }
+  .camera-director-bar {
+    bottom: 12px;
+    width: 95%;
+    overflow-x: auto;
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-title {
+    font-size: 2.4rem;
+  }
+  .hero-specs-strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .form-row, .launch-pedals-row {
+    grid-template-columns: 1fr;
+  }
+  .footer-top {
+    grid-template-columns: 1fr;
+  }
+}

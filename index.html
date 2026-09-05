@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BMW | The Ultimate Driving Machine - 3D Interactive Experience</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600;700;800&family=Space+Grotesk:wght@500;700;800&display=swap" rel="stylesheet">
+  
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+
+  <!-- Three.js (WebGL 3D Engine) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+  <!-- Ambient Cursor Glow Tracker -->
+  <div class="cursor-glow" id="cursor-glow"></div>
+
+  <!-- Launch Control Warp Screen Shake Container -->
+  <div class="launch-warp-overlay" id="launch-warp-overlay"></div>
+
+  <!-- ==========================================================================
+       TOP HEADER & NAVIGATION
+       ========================================================================== -->
+  <header class="bmw-header" id="bmw-header">
+    <a href="#" class="brand-container">
+      <!-- Official BMW Roundel Emblem SVG -->
+      <svg class="bmw-roundel" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="48" stroke="#ffffff" stroke-width="2.5" fill="#000000"/>
+        <circle cx="50" cy="50" r="34" stroke="#ffffff" stroke-width="1.5" fill="#000000"/>
+        <path d="M50 16 A34 34 0 0 1 84 50 L50 50 Z" fill="#0066b1"/>
+        <path d="M50 50 L84 50 A34 34 0 0 1 50 84 Z" fill="#ffffff"/>
+        <path d="M50 50 L50 84 A34 34 0 0 1 16 50 Z" fill="#0066b1"/>
+        <path d="M16 50 A34 34 0 0 1 50 16 L50 50 Z" fill="#ffffff"/>
+        <text x="32" y="27" font-family="'Space Grotesk', sans-serif" font-weight="800" font-size="9" fill="#ffffff">B</text>
+        <text x="47" y="23" font-family="'Space Grotesk', sans-serif" font-weight="800" font-size="9" fill="#ffffff">M</text>
+        <text x="63" y="27" font-family="'Space Grotesk', sans-serif" font-weight="800" font-size="9" fill="#ffffff">W</text>
+      </svg>
+      <div class="brand-text">
+        <span class="brand-title">BMW M</span>
+        <div class="m-stripe">
+          <span class="blue"></span>
+          <span class="darkblue"></span>
+          <span class="red"></span>
+        </div>
+      </div>
+    </a>
+
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#hero" class="nav-link active">Overview</a></li>
+        <li><a href="#dynamics" class="nav-link">M Dynamics</a></li>
+        <li><a href="#fleet" class="nav-link">Fleet Showcase</a></li>
+        <li><a href="#customizer" class="nav-link">360° Studio</a></li>
+        <li><a href="#heritage" class="nav-link">Motorsport DNA</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <!-- Interactive Web Audio V8 Ignition Button -->
+      <button class="engine-start-btn" id="engine-start-btn" title="Click to start/stop TwinPower Turbo V8 audio">
+        <span class="engine-led"></span>
+        <span id="engine-btn-text">ENGINE START</span>
+      </button>
+
+      <button class="btn-primary" id="open-config-btn">
+        <span>Build & Price</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       3D WEBGL CAR CANVAS (BACKGROUND / SCROLL DRIVEN)
+       ========================================================================== -->
+  <div class="three-canvas-container" id="canvas-container">
+    <canvas id="bmw-webgl-canvas"></canvas>
+  </div>
+
+  <!-- ==========================================================================
+       FLOATING CAMERA DIRECTOR TOOLBAR (CINEMATIC PRESETS)
+       ========================================================================== -->
+  <div class="camera-director-bar" id="camera-director-bar">
+    <span class="director-label">CAMERA POV:</span>
+    <button class="cam-preset-btn active" data-cam="front">Front 3/4</button>
+    <button class="cam-preset-btn" data-cam="side">Aero Profile</button>
+    <button class="cam-preset-btn" data-cam="cockpit">Driver Cockpit</button>
+    <button class="cam-preset-btn" data-cam="rear">Quad Exhaust</button>
+    <button class="cam-preset-btn" data-cam="drone">360° Drone</button>
+  </div>
+
+  <!-- ==========================================================================
+       HERO SECTION & INTERACTIVE CONTROLS
+       ========================================================================== -->
+  <section class="hero-section" id="hero">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+        </svg>
+        <span>THE ULTIMATE DRIVING MACHINE</span>
+      </div>
+      <h1 class="hero-title">BMW M8 COMPETITION</h1>
+      <p class="hero-subtitle">
+        Pure German motorsport engineering. 617 horsepower unleashed through intelligent M xDrive, sculptured carbon aerodynamics, and avant-garde luxury.
+      </p>
+
+      <div class="hero-actions">
+        <!-- Launch Control Trigger -->
+        <button class="btn-launch-control" id="launch-control-btn">
+          <span class="launch-pulse"></span>
+          <span>Launch Control (0-100)</span>
+        </button>
+
+        <button class="rev-pedal-btn" id="rev-pedal-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+          <span>Hold to Rev & Burble</span>
+        </button>
+      </div>
+
+      <!-- Hero Bottom Telemetry Highlights -->
+      <div class="hero-specs-strip">
+        <div class="spec-item">
+          <span class="spec-label">Power</span>
+          <span class="spec-val" id="spec-hp">617 HP</span>
+          <span class="spec-desc">TwinPower Turbo V8</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">Acceleration</span>
+          <span class="spec-val" id="spec-accel">3.0s</span>
+          <span class="spec-desc">0-100 km/h</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">Torque</span>
+          <span class="spec-val" id="spec-torque">750 Nm</span>
+          <span class="spec-desc">1,800 - 5,860 RPM</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">Top Speed</span>
+          <span class="spec-val" id="spec-speed">305 km/h</span>
+          <span class="spec-desc">M Driver's Package</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- FLOATING LIVE TELEMETRY HUD GAUGE & AUDIO SPECTRUM -->
+    <div class="telemetry-hud-overlay" id="telemetry-hud">
+      <div class="hud-header">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span class="hud-title">M TELEMETRY HUD</span>
+          <!-- Headlight Toggle -->
+          <button class="hud-icon-btn" id="headlight-toggle-btn" title="Toggle High-Beam Laser Projectors">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="4"></circle>
+              <line x1="1.42" y1="9" x2="6.6" y2="9"></line>
+              <line x1="1.42" y1="12" x2="6.6" y2="12"></line>
+              <line x1="1.42" y1="15" x2="6.6" y2="15"></line>
+            </svg>
+          </button>
+          <!-- Atmosphere Toggle -->
+          <button class="hud-icon-btn" id="atmosphere-toggle-btn" title="Toggle Studio / Midnight Mode">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </button>
+        </div>
+        <span class="drive-mode-pill" id="drive-mode-pill">SPORT PLUS</span>
+      </div>
+
+      <!-- Real-Time Audio Frequency FFT Waveform -->
+      <div class="hud-spectrum-container">
+        <span class="spectrum-label">V8 EXHAUST ACOUSTIC SPECTRUM</span>
+        <canvas id="hud-audio-spectrum" width="290" height="38"></canvas>
+      </div>
+
+      <div class="hud-gauges-row">
+        <!-- Speedometer -->
+        <div class="gauge-block">
+          <span class="gauge-label">Speed</span>
+          <div class="gauge-value-wrap">
+            <span class="gauge-number" id="hud-speed">0</span>
+            <span class="gauge-unit">km/h</span>
+          </div>
+        </div>
+
+        <!-- Tachometer RPM -->
+        <div class="gauge-block">
+          <span class="gauge-label">Engine RPM</span>
+          <div class="gauge-value-wrap">
+            <span class="gauge-number" id="hud-rpm">0</span>
+            <span class="gauge-unit">RPM</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live RPM Bar Indicator -->
+      <div class="rpm-bar-container">
+        <div class="rpm-bar-fill" id="rpm-bar-fill"></div>
+      </div>
+
+      <!-- Turbo Boost Pressure Gauge -->
+      <div class="boost-gauge-wrap">
+        <div style="display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--text-muted); margin-bottom: 3px;">
+          <span>TURBO BOOST</span>
+          <span id="hud-boost-val" style="color: var(--bmw-electric-cyan); font-family: var(--font-mono); font-weight: 700;">0.00 BAR</span>
+        </div>
+        <div class="boost-bar-bg">
+          <div class="boost-bar-fill" id="boost-bar-fill"></div>
+        </div>
+      </div>
+
+      <!-- Real-time Drive Metrics -->
+      <div class="hud-metrics-list">
+        <div class="hud-metric-item">
+          <span class="name">Transmission</span>
+          <span class="val" id="hud-gear">P</span>
+        </div>
+        <div class="hud-metric-item">
+          <span class="name">Lateral G-Force</span>
+          <span class="val" id="hud-gforce">0.00 G</span>
+        </div>
+        <div class="hud-metric-item">
+          <span class="name">AWD Vectoring</span>
+          <span class="val" style="color: var(--bmw-electric-cyan);">M xDrive 4WD SPORT</span>
+        </div>
+        <div class="hud-metric-item">
+          <span class="name">Active Exhaust Valves</span>
+          <span class="val" id="hud-exhaust-valves">CLOSED</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll Down Visual Prompt -->
+    <div class="scroll-indicator">
+      <div class="mouse-scroll-icon">
+        <div class="mouse-wheel"></div>
+      </div>
+      <span>Scroll to explore</span>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       LAUNCH CONTROL MODAL & TELEMETRY CLOCK OVERLAY
+       ========================================================================== -->
+  <div class="launch-modal-overlay" id="launch-modal-overlay">
+    <div class="launch-modal-box">
+      <button class="modal-close-btn" id="launch-close-btn">&times;</button>
+      <div class="launch-m-badge">M DRIVER TELEMETRY</div>
+      <h2 class="launch-title" id="launch-step-title">PREPARE LAUNCH CONTROL</h2>
+      <p class="launch-status" id="launch-status-desc">Step on Brake + Throttle to prime TwinPower Turbo boost.</p>
+
+      <div class="launch-timer-circle">
+        <span class="launch-big-number" id="launch-timer-display">3.00s</span>
+        <span class="launch-timer-lbl">0-100 KM/H</span>
+      </div>
+
+      <div class="launch-pedals-row">
+        <button class="pedal-btn brake-pedal" id="brake-pedal-btn">
+          <span>HOLD BRAKE</span>
+        </button>
+        <button class="pedal-btn throttle-pedal" id="throttle-pedal-btn">
+          <span>HOLD FULL THROTTLE</span>
+        </button>
+      </div>
+      <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 14px;">
+        Hold both pedals to lock revs at 4,200 RPM and build 1.8 BAR boost, then release Brake to launch!
+      </p>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       SCROLLYTELLING TRACK & 3D CAMERA CHOREOGRAPHY CHAPTERS
+       ========================================================================== -->
+  <section class="scrolly-track-section" id="dynamics">
+    <div class="scrolly-stage-container">
+      <div class="story-card-wrapper" id="scrolly-story-card">
+        <span class="story-step-badge" id="story-step-badge">CHAPTER 01 / 04</span>
+        <h2 class="story-title" id="story-title">M TwinPower Turbocharged</h2>
+        <p class="story-desc" id="story-desc">
+          Engine primed at optimal operating temperatures. Two twin-scroll turbochargers nestled within the 90° cylinder bank deliver instantaneous throttle response.
+        </p>
+
+        <div class="story-stats-grid">
+          <div>
+            <div class="story-stat-val" id="story-stat-val-1">617 HP</div>
+            <div class="story-stat-lbl">Output Power</div>
+          </div>
+          <div>
+            <div class="story-stat-val" id="story-stat-val-2">3.0 SEC</div>
+            <div class="story-stat-lbl">Sprint Time</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       REAL-WORLD BMW FLEET SHOWCASE
+       ========================================================================== -->
+  <section class="fleet-section" id="fleet">
+    <div class="section-header">
+      <span class="section-tag">High-Performance Portfolio</span>
+      <h2 class="section-heading">THE BMW FLAGSHIP FLEET</h2>
+      <p class="section-subtext">
+        From thoroughbred Nürburgring weapon to whisper-quiet electric theater. Experience the pinnacle of automotive design with authentic specifications.
+      </p>
+    </div>
+
+    <!-- Filter Buttons -->
+    <div class="fleet-tabs">
+      <button class="tab-btn active" data-filter="all">All Vehicles</button>
+      <button class="tab-btn" data-filter="m-power">M Performance</button>
+      <button class="tab-btn" data-filter="electric-i">BMW i Electric</button>
+      <button class="tab-btn" data-filter="concept">Future & Concept</button>
+    </div>
+
+    <!-- Fleet Cards Container -->
+    <div class="fleet-grid" id="fleet-grid">
+      <!-- Populated dynamically via car-data.js -->
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       360° TURNTABLE STUDIO & REAL-TIME PAINT CUSTOMIZER
+       ========================================================================== -->
+  <section class="customizer-section" id="customizer">
+    <div class="section-header">
+      <span class="section-tag">Individual Studio</span>
+      <h2 class="section-heading">DESIGN YOUR MASTERPIECE</h2>
+      <p class="section-subtext">
+        Select iconic BMW Individual metallic paint finishes, forged alloy wheels, and inspect every sculpted curve with real-time 360° rotation.
+      </p>
+    </div>
+
+    <div class="customizer-layout">
+      <!-- Interactive 3D Turntable Stage -->
+      <div class="turntable-viewport" id="turntable-viewport">
+        <div class="turntable-instruction">
+          <svg class="icon-spin-slow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+          </svg>
+          <span>Click & Drag to Rotate 3D Showroom</span>
+        </div>
+
+        <!-- Slider Angle Controller -->
+        <div class="turntable-slider-wrap">
+          <input type="range" class="turntable-slider" id="turntable-slider" min="0" max="6.28" step="0.02" value="0">
+        </div>
+      </div>
+
+      <!-- Configuration Controls Panel -->
+      <div class="customizer-panel">
+        <!-- Paint Finish Selection -->
+        <div class="config-group">
+          <div class="config-label">
+            <span>Exterior Paint</span>
+            <span class="config-val-name" id="selected-paint-name">Marina Bay Blue Metallic</span>
+          </div>
+          <div class="color-swatches-grid" id="color-swatches-grid">
+            <!-- Populated via car-data.js -->
+          </div>
+        </div>
+
+        <!-- Alloy Wheels Selection -->
+        <div class="config-group">
+          <div class="config-label">
+            <span>M Wheels & Calipers</span>
+            <span class="config-val-name" id="selected-wheel-name">20" M Star-Spoke 813M</span>
+          </div>
+          <div class="wheel-options-list" id="wheel-options-list">
+            <!-- Populated via car-data.js -->
+          </div>
+        </div>
+
+        <!-- Summary & CTA -->
+        <div class="config-summary-bar">
+          <div class="price-row">
+            <span class="label">Configured Total MSRP</span>
+            <span class="total-amount" id="config-total-price">$138,800</span>
+          </div>
+          <button class="btn-primary" id="customizer-order-btn" style="width: 100%; justify-content: center;">
+            <span>Reserve Configuration</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       BMW MOTORSPORT DNA & INNOVATION TIMELINE
+       ========================================================================== -->
+  <section class="heritage-section" id="heritage">
+    <div class="section-header">
+      <span class="section-tag">Heritage & Forwardism</span>
+      <h2 class="section-heading">50+ YEARS OF M POWER</h2>
+      <p class="section-subtext">
+        Born on the racetrack in 1972, BMW M has relentlessly engineered the benchmark for high-performance automotive excellence.
+      </p>
+    </div>
+
+    <div class="timeline-grid">
+      <div class="timeline-card">
+        <div class="timeline-year">1972</div>
+        <h3 class="timeline-title">BMW Motorsport GmbH Founded</h3>
+        <p class="timeline-desc">
+          The birth of the legendary tricolor badge. The lightweight BMW 3.0 CSL "Batmobile" dominates the European Touring Car Championship.
+        </p>
+      </div>
+
+      <div class="timeline-card">
+        <div class="timeline-year">1986</div>
+        <h3 class="timeline-title">The First BMW M3 (E30)</h3>
+        <p class="timeline-desc">
+          The high-revving naturally aspirated S14 4-cylinder engine sets the world record as the most successful touring car in motorsport history.
+        </p>
+      </div>
+
+      <div class="timeline-card">
+        <div class="timeline-year">2014</div>
+        <h3 class="timeline-title">M TwinPower Turbo & Carbon Core</h3>
+        <p class="timeline-desc">
+          Introduction of dual twin-scroll turbocharging and CFRP carbon-fiber reinforced plastic construction, shattering power-to-weight records.
+        </p>
+      </div>
+
+      <div class="timeline-card">
+        <div class="timeline-year">2026+</div>
+        <h3 class="timeline-title">Vision Neue Klasse & Electric Era</h3>
+        <p class="timeline-desc">
+          The dawn of 800V high-density circular architecture, BMW Panoramic Vision full-windshield HUD, and quad-motor electric torque vectoring.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       BUILD & RESERVE MODAL DRAWER
+       ========================================================================== -->
+  <div class="modal-overlay" id="reserve-modal">
+    <div class="build-modal">
+      <button class="modal-close-btn" id="modal-close-btn">&times;</button>
+      <span class="hero-badge">OFFICIAL BMW RESERVATION</span>
+      <h2 class="card-title" style="font-size: 2rem; margin-top: 8px;">Order Specification Sheet</h2>
+      <p style="color: var(--text-dim); font-size: 0.9rem;">
+        Review your custom configured BMW build details and connect with your certified BMW M Certified Dealer.
+      </p>
+
+      <table class="build-summary-table">
+        <tr>
+          <td>Vehicle Model</td>
+          <td id="modal-summary-model">BMW M8 Competition Gran Coupé</td>
+        </tr>
+        <tr>
+          <td>Powertrain</td>
+          <td>4.4L M TwinPower Turbo V8 (617 HP)</td>
+        </tr>
+        <tr>
+          <td>Selected Finish</td>
+          <td id="modal-summary-paint">Marina Bay Blue Metallic</td>
+        </tr>
+        <tr>
+          <td>Wheel Package</td>
+          <td id="modal-summary-wheels">20" M Star-Spoke 813M Bi-Color</td>
+        </tr>
+        <tr>
+          <td>Drivetrain</td>
+          <td>M xDrive with 2WD Track Mode</td>
+        </tr>
+        <tr>
+          <td>Estimated Delivery</td>
+          <td style="color: var(--bmw-electric-cyan);">6 - 8 Weeks</td>
+        </tr>
+        <tr style="border-top: 2px solid var(--bmw-light-blue);">
+          <td style="font-size: 1.1rem; font-weight: 700; color: #fff;">Total MSRP</td>
+          <td style="font-size: 1.3rem; font-weight: 800; color: var(--bmw-electric-cyan);" id="modal-summary-price">$138,800</td>
+        </tr>
+      </table>
+
+      <!-- Reservation Contact Form -->
+      <form class="reservation-form" id="reservation-form" onsubmit="event.preventDefault(); window.submitReservation();">
+        <div class="form-row">
+          <input type="text" class="bmw-input" placeholder="First Name" required>
+          <input type="text" class="bmw-input" placeholder="Last Name" required>
+        </div>
+        <div class="form-row">
+          <input type="email" class="bmw-input" placeholder="Email Address" required>
+          <input type="tel" class="bmw-input" placeholder="Phone Number" required>
+        </div>
+        <button type="submit" class="btn-primary" style="justify-content: center; padding: 14px; margin-top: 8px;">
+          <span>Submit Priority Reservation</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       OFFICIAL FOOTER
+       ========================================================================== -->
+  <footer class="bmw-footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="brand-container">
+          <svg class="bmw-roundel" viewBox="0 0 100 100" fill="none" style="width: 38px; height: 38px;">
+            <circle cx="50" cy="50" r="48" stroke="#ffffff" stroke-width="2.5" fill="#000000"/>
+            <circle cx="50" cy="50" r="34" stroke="#ffffff" stroke-width="1.5" fill="#000000"/>
+            <path d="M50 16 A34 34 0 0 1 84 50 L50 50 Z" fill="#0066b1"/>
+            <path d="M50 50 L84 50 A34 34 0 0 1 50 84 Z" fill="#ffffff"/>
+            <path d="M50 50 L50 84 A34 34 0 0 1 16 50 Z" fill="#0066b1"/>
+            <path d="M16 50 A34 34 0 0 1 50 16 L50 50 Z" fill="#ffffff"/>
+          </svg>
+          <span class="brand-title" style="font-size: 1rem;">BMW Group</span>
+        </div>
+        <p>
+          Sheer Driving Pleasure. High-performance engineering, forwardist luxury, and electrification built for the open road.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Models</h4>
+        <ul>
+          <li><a href="#fleet">BMW M8 Gran Coupé</a></li>
+          <li><a href="#fleet">BMW M4 Competition</a></li>
+          <li><a href="#fleet">BMW i7 xDrive60</a></li>
+          <li><a href="#fleet">BMW M3 CS</a></li>
+          <li><a href="#fleet">Vision Neue Klasse</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Technology</h4>
+        <ul>
+          <li><a href="#dynamics">M TwinPower Turbo</a></li>
+          <li><a href="#dynamics">M xDrive AWD</a></li>
+          <li><a href="#dynamics">Adaptive M Suspension</a></li>
+          <li><a href="#customizer">BMW Individual Studio</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#customizer">Build Your Own</a></li>
+          <li><a href="#customizer">Locate a Retailer</a></li>
+          <li><a href="#customizer">BMW Financial Services</a></li>
+          <li><a href="#heritage">BMW Motorsport Club</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>&copy; 2026 BMW AG. All rights reserved. The BMW name, logo, and model designations are registered trademarks.</span>
+      <span>Fuel consumption & CO2 emissions determined in accordance with the prescribed WLTP measurement procedure.</span>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/car-data.js"></script>
+  <script src="js/audio-engine.js"></script>
+  <script src="js/three-scene.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
