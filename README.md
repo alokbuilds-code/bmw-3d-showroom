@@ -75,35 +75,6 @@ bmw-m-experience/
 
 ---
 
-## ✦ Quick Start
-
-This project is built with **zero build tools, bundlers, or package managers**. It runs natively in any modern browser.
-
-### Option 1: Direct File Launch
-Simply open `index.html` in any web browser:
-```bash
-# Windows
-start index.html
-
-# macOS
-open index.html
-
-# Linux
-xdg-open index.html
-```
-
-### Option 2: Local HTTP Server (Recommended for WebGL)
-Using Python or Node's `npx serve`:
-```bash
-# Python 3
-python -m http.server 8000
-
-# Node.js
-npx serve .
-```
-Then navigate to `http://localhost:8000` in your browser.
-
----
 
 ## ✦ Design Philosophy
 
