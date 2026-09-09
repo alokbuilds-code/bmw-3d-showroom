@@ -6,8 +6,6 @@
 [![Zero Dependency](https://img.shields.io/badge/Dependencies-Zero_Build_Step-success?style=for-the-badge)](#)
 [![License](https://img.shields.io/badge/License-MIT-white?style=for-the-badge)](#)
 
-> **An award-winning interactive 3D automotive web experience celebrating Bavarian engineering. Built from scratch with pure HTML5, CSS3, Three.js WebGL, and procedural Web Audio API synthesis.**
-
 https://bmw-3d-showroom.vercel.app/
 
 ## ✦ Key Highlights
